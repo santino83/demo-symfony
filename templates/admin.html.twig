@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/admin.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <main>
+
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <i class="bi-building-lock me-2 fs-4"></i>
+                <span class="fs-4">Admin</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                {% set route_name = app.request.attributes.get('_route') %}
+                <li>
+                    <a href="{{ path('admin_dashboard_index') }}" class="nav-link {{ route_name starts with "admin_dashboard_" ? 'active' : '' }} text-white">
+                        <i class="bi bi-speedometer2 me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_carousel_index') }}" class="nav-link {{ route_name starts with "admin_carousel_" ? 'active' : '' }} text-white">
+                        <i class="bi bi-file-earmark-slides me-2"></i>
+                        Carousels
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_thematic_index') }}" class="nav-link {{ route_name starts with "admin_thematic_" ? 'active' : '' }} text-white">
+                        <i class="bi-grid me-2"></i>
+                        Thematics
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="dropup dropup-center">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   id="authUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle fs-3"></i>
+                    <span class="ps-1 small">{{ app.user.email }}</span>
+                </a>
+                <ul class="dropdown-menu text-small dropdown-menu-ri" data-bs-theme="dark"
+                    aria-labelledby="authUserMenu" style="">
+                    <li><a class="dropdown-item" href="{{ logout_url() }}">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-divider"></div>
+
+        <div class="w-100 px-3 py-2 overflow-y-auto">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+{% endblock %}

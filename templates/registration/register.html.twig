@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="form-signin text-center">
+
+        {{ form_start(registrationForm) }}
+
+        <h1 class="h3 mb-3 font-weight-normal">Registration Form</h1>
+
+        <div class="form-floating">
+            {{ form_widget(registrationForm.email, {attr: { autocomplete: 'email', class: 'form-control', placeholder: 'Email'}}) }}
+            {{ form_label(registrationForm.email) }}
+        </div>
+
+        <div class="form-floating">
+            {{ form_widget(registrationForm.plainPassword, {attr: { autocomplete: 'current-password', class: 'form-control', placeholder: 'Password'}}) }}
+            {{ form_label(registrationForm.plainPassword, 'Password') }}
+        </div>
+
+        <div class="form-floating">
+            {{ form_widget(registrationForm.firstname, {attr: { class: 'form-control', placeholder: 'Firstname'}}) }}
+            {{ form_label(registrationForm.firstname) }}
+        </div>
+
+        <div class="form-floating mb-3">
+            {{ form_widget(registrationForm.lastname, {attr: { class: 'form-control', placeholder: 'Lastname'}}) }}
+            {{ form_label(registrationForm.lastname) }}
+        </div>
+
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">
+            Register
+        </button>
+
+        <a href="{{ path('app_homepage') }}" class="btn" style="font-size: 14px">Back to homepage</a>
+
+        {{ form_end(registrationForm) }}
+
+    </div>
+
+{% endblock %}

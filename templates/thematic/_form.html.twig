@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+
+        {{ form_row(form.name, {
+            attr: {
+                class: "form-control",
+                autofocus: 'autofocus'
+            },
+            row_attr: {
+                class: 'mb-3'
+            }
+        }) }}
+
+        {{ form_row(form.page, {
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-3'
+            }
+        }) }}
+
+        {{ form_row(form.position, {
+            help: 'A position tag to recall this thematic in page',
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-3'
+            }
+        }) }}
+
+
+<button class="btn btn-success mt-3 mb-5"><i class="bi bi-check fs-4 me-1"></i>{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

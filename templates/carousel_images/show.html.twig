@@ -1,0 +1,150 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Carousel Images{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">Carousel {{ carousel.name }} - Images</h1>
+    <div>Global interval for slides: {{ carousel.interval }}s</div>
+
+    {% for image in carousel.carouselImages %}
+
+        <div class="d-flex mb-3">
+
+            {# position #}
+            <div class="fw-bold fs-5 pe-2">#{{ image.position }}</div>
+
+            {# image #}
+            <div class="pe-2" style="width: 200px"><img src="{{ asset('uploads/carousels/' ~ carousel.id ~ '/' ~ image.imagePath) }}"
+                                        class="img-fluid" alt="{{ image.id }}"></div>
+
+            {# actions #}
+            <div class="d-flex flex-column flex-shrink-1 justify-content-between">
+                <div>
+                    <form method="post"
+                          action="{{ path('admin_carousel_images_change_up', {'id': carousel.id, 'imageId': image.id}) }}">
+                        <input type="hidden" name="_token"
+                               value="{{ csrf_token('changeUp' ~ image.id) }}">
+                        <button type="submit" class="btn btn-sm btn-outline-primary py-0 px-1"><i
+                                    class="bi bi-arrow-up"></i></button>
+                    </form>
+                    <form method="post"
+                          action="{{ path('admin_carousel_images_change_down', {'id': carousel.id, 'imageId': image.id}) }}">
+                        <input type="hidden" name="_token"
+                               value="{{ csrf_token('changeDown' ~ image.id) }}">
+                        <button type="submit" class="btn btn-sm btn-outline-primary py-0 px-1"><i
+                                    class="bi bi-arrow-down"></i></button>
+                    </form>
+                </div>
+                <div>
+                    <button data-bs-toggle="modal"
+                            data-bs-target="#deleteCarouselImage{{ image.id }}"
+                            class="btn btn-sm btn-outline-danger py-0 px-1">
+                        <i class="bi bi-trash"></i>
+                    </button>
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="deleteCarouselImage{{ image.id }}" data-bs-backdrop="static"
+                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteCarouselImage{{ image.id }}_label"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="deleteCarouselImage{{ image.id }}_label">Delete
+                                        Carousel Image</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete this item?
+                                </div>
+                                <div class="modal-footer">
+                                    <form method="post"
+                                          action="{{ path('admin_carousel_images_delete', {'id': carousel.id, 'imageId': image.id}) }}">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ image.id) }}">
+                                        <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abort</a>
+                                        <button type="submit" class="btn btn-danger">Ok, Delete it!</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# extra info #}
+            {% if image.title or image.description or image.interval > 0 %}
+
+                <div class="ps-2">
+                    {% if image.interval > 0 %}<div><span class="fw-bold">Interval:</span> {{ image.interval }}s</div>{% endif %}
+                    {% if image.title %}<div><span class="fw-bold">Title:</span> {{ image.title }}</div>{% endif %}
+                    {% if image.description %}<div><span class="fw-bold">Description:</span> <p>{{ image.description }}</p></div>{% endif %}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="mb-3">No Images Found</div>
+
+    {% endfor %}
+
+
+    <div>
+        {{ form_start(form) }}
+
+        {{ form_row(form.image, {
+            help: 'PNG/JPEG and max 5MB allowed',
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-1'
+            }
+        }) }}
+        {{ form_row(form.position, {
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-1'
+            }
+        }) }}
+        {{ form_row(form.interval, {
+            help: 'Interval in seconds. 0 = use carousel\'s global interval',
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-1'
+            }
+        }) }}
+        {{ form_row(form.title, {
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-1'
+            }
+        }) }}
+        {{ form_row(form.description, {
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-1'
+            }
+        }) }}
+
+        <button class="btn btn-success mt-3 mb-5"><i class="bi bi-check fs-4 me-1"></i> Add Image</button>
+        {{ form_end(form) }}
+
+    </div>
+
+    <a class="btn btn-outline-primary px-2 py-0" href="{{ path('admin_carousel_index') }}"><i
+                class="bi bi-arrow-left fs-4 me-2"></i> back to list</a>
+{% endblock %}

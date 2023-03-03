@@ -18,6 +18,11 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+        default_options:
+            headers:
+                'Accept': 'application/json;charset=UTF-8'
+
 when@test:
     framework:
         test: true

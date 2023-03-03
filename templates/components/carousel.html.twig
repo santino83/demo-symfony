@@ -1,0 +1,49 @@
+{% set carousel = this.carousel %}
+
+{% if carousel %}
+
+    {% set carouselId = this.elementId ? this.elementId : 'carousel' ~ carousel.id %}
+
+    <div id="{{ carouselId }}"
+            {{ attributes.defaults({ class: 'carousel slide' ~ (carousel.fade ? ' carousel-fade' : '')}).without('style').without('id') }}
+            {% if carousel.autoplay %}
+                data-bs-ride="carousel"
+            {% else %}
+                data-bs-interval="false"
+            {% endif %}>
+
+        {% if carousel.indicators %}
+            <div class="carousel-indicators">
+                {% for i in range(0, carousel.carouselImages.count - 1) %}
+                    <button type="button" data-bs-target="#{{ carouselId }}" data-bs-slide-to="{{ i }}"
+                            class="{{ i == 0 ? 'active' : '' }}" aria-current="true"
+                            aria-label="Slide {{ i + 1 }}"></button>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="carousel-inner" {{ attributes.only('style') }}>
+            {% for image in carousel.carouselImages %}
+                {% set interval = image.interval > 0 ? image.interval : carousel.interval %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}"
+                     data-bs-interval="{{ interval * 1000 }}">
+                    <img src="{{ asset('uploads/carousels/' ~ carousel.id ~ '/' ~ image.imagePath) }}"
+                         class="d-block w-100" alt="{{ image.id }}">
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if carousel.controls %}
+            <button class="carousel-control-prev" type="button" data-bs-target="#{{ carouselId }}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#{{ carouselId }}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        {% endif %}
+
+    </div>
+
+{% endif %}

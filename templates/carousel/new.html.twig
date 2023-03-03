@@ -1,0 +1,11 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}New Carousel{% endblock %}
+
+{% block content %}
+    <h1>Create new Carousel</h1>
+
+    {{ include('carousel/_form.html.twig') }}
+
+    <a class="btn btn-outline-primary px-2 py-0" href="{{ path('admin_carousel_index') }}"><i class="bi bi-arrow-left fs-4 me-2"></i> back to list</a>
+{% endblock %}

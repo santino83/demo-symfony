@@ -1,0 +1,18 @@
+{% set thematic = this.thematic %}
+{% if thematic %}
+
+    <div{{ attributes.defaults({class: 'row'}) }}>
+        {% for image in thematic.thematicImages %}
+        <div class="{{ this.colSize ? this.colSize : 'col-12' }}">
+            <div class="thematic">
+                <img src="{{ asset('uploads/thematics/' ~ thematic.id ~ '/' ~ image.imagePath) }}" alt="{{ image.id }}" class="img-fluid">
+                <div class="thematic-body d-flex flex-column justify-content-end">
+                    <div class="thematic-title">{{ image.title }}</div>
+                    <div class="thematic-text pb-3">{{ image.description }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endif %}

@@ -1,0 +1,74 @@
+{{ form_start(form) }}
+
+        {{ form_row(form.name, {
+            attr: {
+                class: "form-control",
+                autofocus: 'autofocus'
+            },
+            row_attr: {
+                class: 'mb-3'
+            }
+        }) }}
+
+        {{ form_row(form.page, {
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-3'
+            }
+        }) }}
+
+        {{ form_row(form.position, {
+            help: 'A position tag to recall this carousel in page',
+            attr: {
+                class: "form-control"
+            },
+            row_attr: {
+                class: 'mb-3'
+            }
+        }) }}
+
+        <div class="card">
+
+            <div class="card-body">
+                <div class="card-title text-decoration-underline">Advanced Options</div>
+                <div class="card-text mt-3">
+
+                    <div class="form-check form-switch">
+                        {{ form_widget(form.fade, {attr: { class: 'form-check-input'}}) }}
+                        {{ form_label(form.fade, 'Fade Transition', {attr: {class: 'form-check-label' }}) }}
+                    </div>
+
+                    <div class="form-check form-switch">
+                        {{ form_widget(form.autoplay, {attr: { class: 'form-check-input'}}) }}
+                        {{ form_label(form.autoplay, 'Autoplay', {attr: {class: 'form-check-label' }}) }}
+                    </div>
+
+                    <div class="form-check form-switch">
+                        {{ form_widget(form.indicators, {attr: { class: 'form-check-input'}}) }}
+                        {{ form_label(form.indicators, 'Show Indicators', {attr: {class: 'form-check-label' }}) }}
+                    </div>
+
+                    <div class="form-check form-switch">
+                        {{ form_widget(form.controls, {attr: { class: 'form-check-input'}}) }}
+                        {{ form_label(form.controls, 'Show Controls', {attr: {class: 'form-check-label' }}) }}
+                    </div>
+
+                    {{ form_row(form.interval, {
+                        help: 'Time between slides in second. Min 1 second, max 100 seconds',
+                        attr: {
+                            class: "form-control w-auto"
+                        },
+                        row_attr: {
+                            class: 'mt-3'
+                        }
+                    }) }}
+
+                </div>
+            </div>
+        </div>
+
+
+<button class="btn btn-success mt-3 mb-5"><i class="bi bi-check fs-4 me-1"></i>{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
